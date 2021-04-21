@@ -7,16 +7,97 @@
 </head>
 
 <body>
+	<!-- 단순 vue 출력 -->
 	<div id="app">
 		{{message}}
 	</div>
 	
+	<!-- html 속성에 vue 데이터 출력 -->
 	<div id="app-2">
 		<span v-bind:title="message">
 			내 위에 마우스를 올리면 동적 거시기된 title
 		</span>
 	</div>
 	
+	<!-- 조건에 따라 html 출력 -->
+	<div id="app-3">
+		<span v-if="seen">나를 볼수가 있는가?</span>
+	</div>
+	
+	<!-- vue 반복문 출력 -->
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{ todo.text }}
+			</li>
+		</ol>
+	</div>
+	
+	<!-- vue 클릭 이벤트 출력 -->
+	<div id="app-5">	
+		<p>{{message}}</p>
+		<button v-on:click="reverseMessage">메시지 뒤집기</button>
+	</div>
+	
+	<!-- vue는 양방향 바인딩 가능하다. p함수와 input함수를 서로 바인딩 -->
+	<div id="app-6">	
+		<p>{{message}}</p>
+		<input v-model="message">
+	</div>
+	
+	<!-- vue 컴포넌트 사용 groceryList를 가지고 todo-item컴포넌트로 활용 -->
+	<div id="app-7">
+		<ol>
+			<!--
+		      이제 각 todo-item 에 todo 객체를 제공합니다.
+		      화면에 나오므로, 각 항목의 컨텐츠는 동적으로 바뀔 수 있습니다.
+		      또한 각 구성 요소에 "키"를 제공해야합니다 (나중에 설명 됨).
+		     -->
+		     <todo-item
+		     	v-for="item in groceryList"
+		     	v-bind:todo="item"
+		     	v-bind:key="item.id"
+		     >
+		     </todo-item>
+		</ol>
+	</div>
+	
+	
+	<!-- 양방향 데이터지만 해당 데이터 변경 안되게 처리 object freeze -->
+	<div id="app-8">
+		<p>{{foo}}</p>
+		<p v-once>변경 안되!!! : {{foo}}</p>
+		<!-- obj.foo는 더이상 변하지 않습니다! -->
+		<button v-on:click="foo='boooooooooooooooooooooooooooooooooom'">change it</button>
+	</div>
+	
+	<!-- vue 객체에서 computed 혹은 function으로 객체 사용 . 그리고 그 둘의 차이점 인지 -->
+	<div id="app-9">
+		<p>원본 메시지 : "{{ message }}"</p>
+		<!-- computed를 통해 사용할경우 최초 캐싱되어 이후 업데이트 되지않음 -->
+		<!-- function을 통해 실행될경우만 캐싱사용되지 않고 업데이트 됨 -->
+		<!-- now , now()를 통해 확인가능 -->
+		<p>역순으로 표시한 메시지 : "{{ reversedMessage }}"</p>
+		<p>역순으로 표시한 메시지 (펑션버전) : "{{ reversedMessage2() }}"</p>
+		<p>날자확인 : "{{ now }}"</p>
+	</div>
+	
+	<div id="app-10">
+		{{ fullName }}
+	</div>
+	
+	<div id="app-11">
+		<p>
+			yes/no 질문을 물어보세요.
+			<input v-model="question">
+		</p>
+		<p>{{ answer }}</p>
+	</div>
+	
+	
+	
+	<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
 	<script type="text/javascript" src="../js/index.js"></script>
 </body>
 </html>
