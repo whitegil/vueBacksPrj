@@ -123,7 +123,7 @@ var app10 = new Vue ({
 	data : {
 		firstName: "한길",
 		lastName: "백",
-		fullName: "한길 백"
+		fullName: ""
 	},
 	watch: {
 		firstName: function(val) {
@@ -134,6 +134,7 @@ var app10 = new Vue ({
 		}
 	}
 })
+
 
 var app11 = new Vue ({
 	el: "#app-11",
@@ -149,11 +150,189 @@ var app11 = new Vue ({
 		}
 	},
 	created: function(){
+		// _.debounce는 lodash가 제공하는 기능으로
+	    // 특히 시간이 많이 소요되는 작업을 실행할 수 있는 빈도를 제한합니다.
+	    // 이 경우, 우리는 yesno.wtf/api 에 액세스 하는 빈도를 제한하고,
+	    // 사용자가 ajax요청을 하기 전에 타이핑을 완전히 마칠 때까지 기다리길 바랍니다.
+	    // _.debounce 함수(또는 이와 유사한 _.throttle)에 대한
+	    // 자세한 내용을 보려면 https://lodash.com/docs#debounce 를 방문하세요
+		this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
 		
+		console.log("## -- " + this.debouncedGetAnswer());
+		console.log("## -- " + this.debouncedGetAnswer);
+		
+	},
+	methods: {
+		getAnswer: function(){
+			if(this.question.indexOf("?") === -1){
+				this.answer = "질문에는 일반적으로 물음표가 포함됩니다. ;-)";
+				return;
+			}
+			
+			this.answer = "생각중..."
+			var vm = this
+			axios.get("https://yesno.wtf/api")
+				.then(function(response){
+					vm.answer=_.capitalize(response.data.answer)
+				})
+				.catch(function(error){
+					vm.answer = "에러 ! API 요청에 오류가 있습니다." + error
+				})
+			
+		}
 	}
+	
 })
 
 
+var app12 = new Vue ({
+	el: "#app-12",
+	data: {
+		classObject: {
+			active: true,
+			"text-danger": false,
+			error: null,
+			tt: true
+		}
+	},
+	computed: {
+		whatTheClassObj: function(){
+			return {
+				classObj1: this.active && !this.error,
+				"classObj2": this.active && this.error == null,
+				classObj3: this.active && this.tt
+			}
+		}
+	}
+	
+	
+})
+
+
+var app13 = new Vue ({
+	el: "#app-13",
+	data: {
+		active: true,
+		error: null
+	},
+	computed: {
+		classObject: function(){
+			return {
+				classObj1: this.active && !this.error,
+				"classObj2": this.active && this.error == null,
+				classObj3: this.active && this.tt
+			}
+		}
+	}
+})
+
+var app14 = new Vue ({
+	el: "#app-14",
+	data: {
+		activeClass: "kill",
+		errorClass: "한글?",
+		isActive: true
+	}
+})
+
+var app15 = new Vue ({
+	el: "#app-15",
+	data: {
+		activeClass: "kill",
+		errorClass: "한글?",
+		isActive: true
+	}
+})
+
+var app16 = new Vue ({
+	el: "#app-16",
+	data: {
+		styleObject : {
+			color: "red"
+		},
+		styleObject2 : {
+			fontSize: "45px"
+		}	
+	}
+})
+
+var app17 = new Vue ({
+	el: "#app-17",
+	data: {
+		awesome: false,
+		aweso: "B"
+	}
+})
+
+var app18 = new Vue ({
+	el: "#app-18",
+	data: {
+		loginType: "username",
+		ok: false
+	},
+	methods: {
+		chgLoginTypeClick : function(){
+			if(this.loginType == "email"){
+				this.loginType = "username"
+			}else{
+				this.loginType = "email"
+			}
+		}
+	}
+})
+
+var app19 = new Vue ({
+	el: "#app-19",
+	data: {
+		items: [
+			{message: "Foo11", id:"nana"},
+			{message: "Bar11", id:"koko"}
+		]
+	}
+})
+
+var app20 = new Vue ({
+	el: "#app-20",
+	data: {
+		parentMessage: "Parent",
+		items: [
+			{message: "Foo22"},
+			{message: "Bar22"}
+		]
+	}
+})
+
+var app21 = new Vue ({
+	el: "#app-21",
+	data: {
+		objobj: {
+			title: "how how how",
+			author: "되는거맞니?",
+			publishedAt: "2021-04-22"
+		}
+	}
+})
+
+var app22 = new Vue ({
+	el: "#app-22",
+	data: {
+		numbers: [1,2,3,4,5]
+	},
+	computed: {
+		evenNumbers: function(){
+			return this.numbers.filter(function(number){
+				return number % 2 ===0
+			})
+		}
+	},
+	methods: {
+		even: function (numbers) {
+			return numbers.filter(function(number){
+				return number % 2 === 1
+			})
+		}
+	}
+})
 
 
 

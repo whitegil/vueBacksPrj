@@ -82,10 +82,13 @@
 		<p>날자확인 : "{{ now }}"</p>
 	</div>
 	
+	<!-- 명령형 프로그래밍 선언형 프로그래밍 차이 구현 x -->
 	<div id="app-10">
 		{{ fullName }}
 	</div>
 	
+	
+	<!-- watch속성 활용 watch : 바인드된 객체가 변경될때 실행되는 펑션 -->
 	<div id="app-11">
 		<p>
 			yes/no 질문을 물어보세요.
@@ -95,6 +98,124 @@
 	</div>
 	
 	
+	<!-- Vue에서의 css 처리 (data를 통한 css) -->
+	<div id="app-12">
+		<div class="static" v-bind:class="classObject">냥냔냐냐냥펀치</div>
+	</div>
+	
+	<!-- Vue에서의 css 처리 (computed를 통한 함수 결과를 통한 css) -->
+	<div id="app-13">
+		<div class="static" v-bind:class="classObject">냥냔냐냐냥펀치다나나나나나</div>
+	</div>
+	
+	<!-- Vue에서의 css 처리 (배열로도 입력 가능) -->
+	<div id="app-14">
+		<div class="static" v-bind:class="[activeClass, errorClass]">와다다다다닷</div>
+	</div>
+	
+	<!-- Vue에서의 css 처리 (배열의 삼항식을 통해서도 입력 가능) -->
+	<div id="app-15">
+		<div class="static" v-bind:class="[isActive ? activeClass : '', errorClass]">와다다다다닷</div>
+	</div>
+	
+	<!-- Vue에서 Style적용, 배열로도 입력가능 -->
+	<div id="app-16">
+		<div class="static" v-bind:style="[styleObject, styleObject2]">스타일이닷!!!!!</div>
+	</div>
+	
+	<!-- Vue에서 조건문 사용 if elseif else 전부 가능 -->
+	<div id="app-17">
+		<template v-if="aweso == 'A'">
+			<p>A래요 A래요</p>
+			<p>A랄A랄A랄</p>
+		</template>
+		<template v-else-if="aweso == 'B'">
+			<p>B래요 B래요</p>
+			<p>B랄B랄B랄</p>
+		</template>
+		<template v-else>
+			<p>다니래요 다니래요</p>
+			<p>다라다랄랄</p>
+		</template>
+	</div>
+	
+	
+	<!-- Vue에서 같은 속성의 위치면 기존의 값을 다시 렌더링 하지않고 남아있다 -->
+	<!-- key를 별도로 해주면 그런현상 없어짐 -->
+	<!-- v-show 경우 display만 가려주기 때문에 dom에 나오지만 가려질뿐이다 -->
+	<div id="app-18">
+		<template v-if="loginType === 'username'">
+			<labe>사용자 이름</labe>
+			<input placeholder="사용자 입력 입려쿠" key="username-input">
+		</template>
+		<template v-else>
+			<labe>이메일</labe>
+			<input placeholder="이메이루 입력 입려쿠" key="email-input">
+		</template>
+		<button v-on:click="chgLoginTypeClick">변경 버튼이다냥</button>
+		<h1 v-show="ok">무서운 애기~~ 무서운 애기 할까 무서운 애기 해줄까</h1>
+	</div>
+	
+	<!-- Vue에서 for문 활용 -->
+	<!-- 배열변경방법 -->
+	<!-- app19.$set(app19.items, 0, {message:"뤠드", id:"7"}) -->
+	<div id="app-19">
+		<li v-for="item in items" v-bind:key="item.id">
+			{{item.message}}
+		</li>
+	</div>
+	<br>
+	<!-- Vue에서 for문 활용했을때 다른 객체와 함께 혹은 index와 함께사용 -->
+	<div id="app-20">
+		<li v-for="(item, index) of items">
+			{{parentMessage}} - {{index}} - {{item.message}}
+		</li>
+	</div>
+	<!-- Vue에서 객체에 대한 반복을 사용 -->
+	<!-- (객체반복에 대해서는 내부적인 key를 통해 결정되는데 javascript 엔진 간에 일관적이지 않다고함) -->
+	<!-- 객체 변경에 대해서 reactive되지 않음. reactive하려면 Vue에서 지원하는 set활용해야됨 -->
+	<!-- app21.$set(app21.objobj, "필살기 ", "낭낭펀치") -->
+	<!-- 반응형 속성 추가 다른 방법 -->
+	<!-- app21.userProfile = Object.assign({}, vm.userProfile, {
+	  age: 27,
+	  favoriteColor: 'Vue Green'
+	}) -->
+	<div id="app-21">
+		<ul class="demo">
+			<li v-for="(value, name, index) in objobj" >
+				{{name}}: {{value}} ::: {{index}}
+			</li>
+		</ul>
+	</div>
+	
+	
+	<!-- 조건에 따른 리스트 출력이 필요하면 computed를 사용한다 -->
+	<!-- computed를 사용 할 수 없는 상황이면 펑션으로 감싸주어서 사용한다 -->
+	<!-- 숫자를 명시하여서 객체 없이 사용 가능 -->
+	<div id="app-22">
+		<ul class="demo">
+			<li v-for="n in evenNumbers" >
+				{{n}}
+			</li>
+		</ul>
+		<ul class="demo">
+			<li v-for="n in even(numbers)" >
+				{{n}}
+			</li>
+		</ul>
+		<div>
+			<span v-for="n in 10">
+				{{n}} : 낄낄
+				<br v-if="n % 2 == 0">
+			</span>
+		</div>
+	</div>
+	
+	
+	
+	
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	
 	<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
 	<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
