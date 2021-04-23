@@ -211,6 +211,275 @@
 		</div>
 	</div>
 	
+	<br>
+	
+	
+	<!-- 컴포넌트에서 반복문을 사용하여 구현가능하다 -->
+	<div id="app-23">
+		<form v-on:submit.prevent="addNewTodo">
+			<label for="new-todo">Add a Todo</label>
+			<input 
+				v-model="newTodoText"
+				id="new-todo"
+				placeholder="E.g. fedd the cat"
+			>
+			<button>Add</button>
+		</form>	
+		
+		<ul>
+			<li 
+				is="todo-item-for"
+				v-for="(todo, index) in todos"
+				v-bind:key="todo.id"
+				v-bind:title="todo.title"
+				v-on:remove="todos.splice(index, 1)"
+			>
+			</li>
+		</ul>
+	</div>
+	
+	<!-- Vue 기본 click이벤트 동작 -->
+	<div id="app-24">
+		<button v-on:click="counter += 1">Add 1</button>
+		<p>위 버튼을 클릭한 횟수는 {{counter}} 번 입니다.</p>
+	</div>
+	
+	<!-- Vue 클릭이벤트 펑션 연결 -->
+	<div id="app-25">
+		<button v-on:click="greet">Greeet11	dfszfwaefg</button>	
+	</div>
+	
+	<br>
+	
+	<!-- Vue 이벤트시 직접 파라미터를 전달 가능하다 -->
+	<div id="app-26">
+		<button v-on:click="say('hi', $event)">Say hi</button>
+		<button v-on:click="say('what the', $event)">Say what</button>
+	</div>
+	
+	<!-- 클릭 이벤트 전파가 중단됩니다 -->
+	<!-- <a v-on:click.stop="doThis"></a> -->
+	
+	<!-- 제출 이벤트가 페이지를 다시 로드 하지 않습니다 -->
+	<!-- <form v-on:submit.prevent="onSubmit"></form> -->
+	
+	<!-- 수식어는 체이닝 가능합니다 -->
+	<!-- <a v-on:click.stop.prevent="doThat"></a> -->
+	
+	<!-- 단순히 수식어만 사용할 수 있습니다 -->
+	<!-- <form v-on:submit.prevent></form> -->
+	
+	<!-- 이벤트 리스너를 추가할 때 캡처모드를 사용합니다 -->
+	<!-- 즉, 내부 엘리먼트를 대상으로 하는 이벤트가 해당 엘리먼트에서 처리되기 전에 여기서 처리합니다. -->
+	<!-- <div v-on:click.capture="doThis">...</div> -->
+	
+	
+	<!-- event.target이 엘리먼트 자체인 경우에만 트리거를 처리합니다 -->
+	<!-- 자식 엘리먼트에서는 안됩니다 -->
+	<!-- <div v-on:click.self="doThat">...</div> -->
+	
+	<!-- 클릭 이벤트는 최대 한번만 트리거 됩니다. -->
+	<!-- <a v-on:click.once="doThis"></a> -->
+	
+	<!-- 키보드 키에 대한 이벤트도 걸수있다. -->
+	<!-- <input v-on:keyup.enter="submit"> -->
+	
+	<!-- 키코드에 대한 이벤트도 걸 수 있다 -->
+	<!-- <input v-on:keyup.13="submit"> -->
+	
+	<!-- 전여 설정을 통해 사용자 지정 키코드를 사용 할수도 있다 -->
+	<!-- `v-on:keyup.f1`을 사용할 수 있습니다. -->
+	<!-- Vue.config.keyCodes.f1 = 112 -->
+	
+	<!-- 수식어 키가 눌러진 경우에도 이벤트 리스너를 트리거 할 수 있다. -->
+	<!-- 수식어 키 트리거는 수식어를 누른 상태에서 동작이 일어나야 트리거된다 -->
+	<!-- Alt + C -->
+	<!-- <input @keyup.alt.67="clear"> -->
+	
+	<!-- Ctrl + Click -->
+	<!-- <div @click.ctrl="doSomething">Do something</div> -->
+	
+	
+	<!-- 바인딩 방법 --> 
+	<!-- <textarea> {{message}}</textarea> 방법은 동작하지 않는다 -->
+	<div id="app-27">
+		<span>여러줄 메시지 : </span>
+		<p style="white-space: pre-line">{{message}}</p>
+		<br>
+		<textarea v-model="message" placeholder="여러줄 입력"></textarea>
+	</div>
+	
+	<br>
+	
+	
+	<!-- Vue에서 체크박스 구현예제 여러개의 checkbox일경우 배열 단수일경우 true, flase로 관리 -->
+	<div id="app-28">
+		<input type="checkbox" id="jack" value="jack" v-model="checkedNames">
+		<label for="jack">jack</label>
+		<input type="checkbox" id="john" value="john" v-model="checkedNames">
+		<label for="john">jack</label>
+		<input type="checkbox" id="mike" value="mike" v-model="checkedNames">
+		<label for="mike">mike</label>
+		<br>
+		<span>체크한 이름: {{checkedNames}}</span>
+		<br><br>
+		<input type="checkbox" id="mike" value="mike" v-model="soloChecked">
+		<label for="soloChecked">soloChecked</label>
+		<br>
+		<span>하나체크결과 : {{soloChecked}}</span>
+	</div>
+	
+	<br>
+	
+	<!-- Vue에서 radio 구현 -->
+	<div id="app-29">
+		<input type="radio" id="one" value="one" v-model="radio">
+		<label for="one">one</label>
+		<br>
+		<input type="radio" id="two" value="two" v-model="radio">
+		<label for="one">two</label>
+		<br>
+		<span>선택: {{radio}}</span>
+	</div>
+	
+	<br>
+	<!-- Vue에서 콤보박스 구현 -->
+	<div id="app-30">
+		<select v-model="option">
+			<option disabled value="">please select one</option>
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<br>
+		<span>선택함: {{option}}</span>
+		<br><br>
+		
+		<select v-model="option2">
+			<option v-for="option in options" v-bind:value="option.value">	
+				{{option.text}}
+			</option>
+		</select>
+		<br>
+		<span>Selected: {{option2}}</span>
+		<br>
+		<input v-model.number="age" type="number">
+	</div>
+	
+	
+	<!-- 사용자 입력이 자동으로 숫자 변환이 된다고 하는데... 안됨... -->
+	<!-- 숫자 올릴수있는것만 생김 -->
+	<!-- <input v-model.number="age" type="number"> -->
+	
+	<!-- "input" 대신 "change" 이후에 동기화 됩니다. -->
+	<!-- <input v-model.laze="meg"> -->
+	
+	<!-- v-model이 관리하는 input이 자동으로 trim처리 된다 -->
+	<!-- <input v-model.trim="msg"> -->
+	
+	<br>	
+	
+	
+	<!-- Vue의 기본 컴포넍트 사용 -->
+	<!-- 전역적으로 사용하여 모든곳에서 사용될수도 있으며, -->
+	<!-- 해당 Vue내에서 사용될 경우 이 안에서만 존재한다 -->
+	
+	<!-- ********************************** -->
+	<!-- ***************중요**************** -->
+	<!-- ********************************** -->
+	<!-- 컴포넌트는 vue html내부에서만 실행되며 -->
+	<!-- vue생성 이후에 정의되면 해당 vue내부에서 못불러온다 -->
+	<!-- ********************************** -->
+	
+	 
+	
+	<div id="app-31">
+		<my-component></my-component>
+		<br>
+		<inner-component></inner-component>
+	</div>
+	
+	<!-- 컴포넌트 이용시에 table 안에, tr, td나 select 안에 option같은 경우
+	이 html태그안에서만 동작하는 html 일경우 그리는데 에러가 발생한다
+	이럴때는 is 속성을 사용하여 정의한다 -->
+	<!-- ex) 잘못된예 -->
+	<!-- <table>
+		<my-row></my-row>
+	</table> -->
+	<!-- ex) 올바른예 -->
+	<!-- <table>
+		<tr is="my-row"></tr>
+	</table> -->
+	
+	
+	
+	<!-- 컴포넌트에에서 사용되는 data항목은 function return값으로 정의되야한다. -->
+	<!-- data를 내부에서 정의하면 컴포넌트 호출마다 컴포넌트 만큼의 사용 객체가 만들어져 사용된다. -->
+	
+	<!-- 컴포넌트는 컴포넌트가 정의된 부모와 자식관계로 이루어지고 
+	부모는 자식에게 props 값을 넘겨주고
+	자식은 부모에게 event를 통해 메시지를 보낸다 -->
+	
+	<!-- component 네임이나 내부로 전달되는 prop값의 네임은
+	정의가 camel로 되있다면 케밥케이스(하이픈으로 문자열 묶음)로 호출해야한다. -->  
+	<!-- 깔끔하게 그냥 케밥으로 통일하면 좋을것 같다 케밥이 맛있기도하고... -->
+	
+	<!-- bind를 통해 부모의 데이터를 propsㄹ를 동적으로 바인딩 가능 --> 
+	
+	<!-- object형식으로 bind 할경우 objectd의 객체들 모두 하위 컴포넌트로 전부 전달이 된다 -->	
+	
+	<div id="app-32">
+		<simple-counter-component></simple-counter-component>
+		<simple-counter-component></simple-counter-component>
+		<simple-counter-component></simple-counter-component>
+		<simple-counter-component></simple-counter-component>
+		<simple-counter-component></simple-counter-component>
+		<br><br>
+		<prop-test my-message="안뇽하세용 낄낄. 저아시죵"></prop-test>
+		<br><br>
+		<input v-model="parentMsg">
+		<br>
+		<nakonako v-bind:my-message="parentMsg"></nakonako>
+		<br>
+		<span>{{todo}}</span>
+		<br>
+		<todo-item v-bind="todo"></todo-item>
+	</div>
+	
+	<!-- 리터럴 구문을 사용하여 숫자를 전달하면 해당값은 문자열로 전달된다 --> 
+	<!-- 바인드를 통해 숫자로 전달가능하다 -->
+	
+	<!-- 틀린 예 ex) -->
+	<!-- <comp some-prop="1"></comp> -->
+	
+	<!-- 옳은 예 ex) -->
+	<!-- <comp v-bind:some-prop="1"> -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

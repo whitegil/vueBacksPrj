@@ -334,6 +334,174 @@ var app22 = new Vue ({
 	}
 })
 
+Vue.component("todo-item-for", {
+	template: '\
+		<li>\
+			{{title}}\
+			<button v-on:click="$emit(\'remove\')">Remove</button>\
+		<li>\
+	',
+	props: ["title"]
+})
+
+var app23 = new Vue ({
+	el: "#app-23",
+	data: {
+		newTodoText: "",
+		todos: [
+			{ id: 1, title: "Do the dishes"},
+			{ id: 2, title: "take out the trash"},
+			{ id: 3, title: "mow the lawn"},			
+		],
+		nextTodoId: 4
+	},
+	methods: {
+		addNewTodo: function(){
+			this.todos.push({
+				id: this.nextTodoId++,
+				title: this.newTodoText
+			})
+			this.newTodoText = ""
+		}
+	}
+})
+
+var app24 = new Vue ({
+	el: "#app-24",
+	data: {
+		counter: 0
+	}
+})
+
+var app25 = new Vue({
+	el: "#app-25",
+	data: {
+		name: "나코땅땅"
+	},
+	methods: {
+		greet: function (event) {
+			alert("헬로~ " + this.name + " 씨!");
+			if(event) {
+				alert(event.target.tagName)
+			}
+			
+		}
+	}
+})
+
+var app26 = new Vue({
+	el: "#app-26",
+	data: {
+		name: "나코땅땅"
+	},
+	methods: {
+		say: function (message, event) {
+			console.log("## -- " + event);
+			alert(message);			
+		}
+	}
+})
+
+var app27 = new Vue({
+	el: "#app-27",
+	data: {
+		message: "나코땅땅"
+	}
+})
+
+var app28 = new Vue({
+	el: "#app-28",
+	data: {
+		checkedNames: ["jack"],
+		soloChecked: true
+	}
+})
+
+var app29 = new Vue({
+	el: "#app-29",
+	data: {
+		radio : "two"
+	}
+})
+
+var app30 = new Vue({
+	el: "#app-30",
+	data: {
+		option : "b",
+		option2: "333",
+		options : [
+			{text: "one", value: "1"},
+			{text: "two", value: "22"},
+			{text: "three", value: "333"},
+			{text: "four", value: "4444"},
+			{text: "five", value: "55555"}
+		],
+		age : 0
+		
+	}
+})
+
+
+Vue.component("my-component", {
+	template: "<div>사용자 정의 컴포넌트 입니다!.</div>"
+})
+
+var child = {
+	template: "<div>사용자 내부 정의 컴포넌트 입니다.</div>"
+}
+
+//루트 인스턴스 생성
+var app31 = new Vue({
+	el: "#app-31",
+	components: {
+		"inner-component": child
+	}
+})
+
+
+
+
+var counterData = {counter:0}
+
+Vue.component("simple-counter-component", {
+	template: "<button v-on:click='counter += 1'> {{ counter }} </button>",
+	//counterData는 기술적으로 함수이므로 Vue는 따지지 않지만 
+	//각 컴포넌트는 인스턴스에 대해 같은 객체 참조를 반환
+	data: function(){
+		return {
+			counter: 0	
+		}
+	}
+})
+
+
+Vue.component("propTest", {
+	//props 정의
+	props: ["myMessage"],
+	// 데이터와 마찬가지로 prop는 템플릿 내부에서 사용 할 수 있다
+	//vm의 this.message로 사용 할 수 있다.
+	template: "<span>{{myMessage}}</span>"
+})
+
+Vue.component("nakonako", {
+	//props 정의
+	props: ["myMessage"],
+	// 데이터와 마찬가지로 prop는 템플릿 내부에서 사용 할 수 있다
+	//vm의 this.message로 사용 할 수 있다.
+	template: "<span>{{myMessage}}</span>"
+})
+
+var app32 = new Vue({
+	el : "#app-32",
+	data: {
+		parentMsg : "낰낰",
+		todo: {
+			text: "Learn Vue",
+			isComplate: false
+		}
+	}
+	
+})
 
 
 
@@ -342,6 +510,30 @@ var app22 = new Vue ({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
 
 
