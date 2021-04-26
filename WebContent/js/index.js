@@ -483,6 +483,8 @@ Vue.component("propTest", {
 	template: "<span>{{myMessage}}</span>"
 })
 
+
+
 Vue.component("nakonako", {
 	//props 정의
 	props: ["myMessage"],
@@ -491,32 +493,162 @@ Vue.component("nakonako", {
 	template: "<span>{{myMessage}}</span>"
 })
 
+Vue.component("todo-item-test", {
+	
+	props: ["tt", "isComplate"],
+	
+	// 데이터와 마찬가지로 prop는 템플릿 내부에서 사용 할 수 있다
+	//vm의 this.message로 사용 할 수 있다.
+	template: "<span>{{isComplate}}</span>"
+})
+
+Vue.component("propcheck", {
+	props: {
+		// 기본 타입 확인 (`null` 은 어떤 타입이든 가능하다는 뜻입니다)
+		propa: Number,
+		// 여러개의 가능한 타입
+		propb: [String, Number],
+		propf: {
+			validator: function (value) {
+				return value > 10
+			}
+		}
+	},
+	
+	template: "<span>{{propf}}</span>"
+	
+})
+
 var app32 = new Vue({
 	el : "#app-32",
 	data: {
 		parentMsg : "낰낰",
 		todo: {
-			text: "Learn Vue",
+			tt : "티티",
 			isComplate: false
-		}
-	}
-	
+		},
+		prop11: "",
+		prop22: ""
+	}	
 })
 
 
+Vue.component("button-counter33", {
+	template: "<button v-on:click='incrementCounter'>{{counter}}</button>",
+	data: function () {
+		return {
+			counter: 0
+		}
+	},
+	methods: {
+		incrementCounter: function(){
+			this.counter += 1 
+			this.$emit("increment")
+		}
+	}
+})
+
+Vue.component("comp-dothething", {
+	template: "<button v-on:click='incrementCounter'>{{counter}}</button>",
+	data: function () {
+		return {
+			counter: 0
+		}
+	},
+	methods: {
+		incrementCounter: function(){
+			console.log("do-the-thing-console");
+			this.$emit('update:foo', "cs")
+		},
+		test: function(){
+			console.log("#### -- tttt");
+		}
+	}
+})
 
 
+var app33 = new Vue({
+	el: "#app-33",
+	data : {
+		total: 0,
+		totalbind: 0
+	},
+	methods: {
+		incrementTotal: function(){
+			this.total += 1
+		},
+		doTheThing: function(event){
+			console.log("33## -- " + event)
+		}
+	}
+})
 
 
+Vue.component("currency-input", {
+	template: '\
+				<span>\
+					$\
+					<input\
+						ref="input"\
+						v-bind:value="value"\
+						v-on:input="updateValue($event.target.value)">\
+				</span>\
+			  ',
+	props: ["value"],
+	methods: {
+		//값을 직접 업데이트하는 대신 이 메소드를 사용하여 입력값에 대한 서식을 지정하고 배치 할 수 있습니다.
+		updateValue: function(value){
+			var formattedValue = value
+					//공백을 제거합니다.
+					.trim()
+					//소수 자릿수 2자리로 줄입니다.
+					.slice(
+						0,
+						value.indexOf("0") === -1 ? value.length : value.indexOf(".") + 3
+					)
+			
+			//값이 아직 정규화 되지 않은 경우
+			//이를 수동으로 재정의하여 조건을 충족시킵니다.
+			if(formattedValue != value) {
+				this.$refs.input.value = formattedValue
+			}
+			
+			//입력 이벤트를 통해 숫자 값을 내보냅니다.
+			this.$emit("input", Number(formattedValue))
+		}
+	}
+						
+})
+
+var app34 = new Vue({
+	el: "#app-34",
+	data : {
+		price: 0
+	},
+	methods: {
+		
+	}
+})
 
 
+Vue.component("child-slot-test", {
+	template: '\
+		<div>\
+			<h2>나는 자식 컴포넌트의 제목입니다.</h2>\
+			<slot>제공된 컨텐츠가 없는 경우에만 보실 수 있습니다.</slot>\
+		</div>\
+	'
+})
 
-
-
-
-
-
-
+var app35 = new Vue({
+	el: "#app-35",
+	data : {
+		
+	},
+	methods: {
+		
+	}
+})
 
 
 

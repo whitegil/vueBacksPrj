@@ -424,10 +424,6 @@
 	정의가 camel로 되있다면 케밥케이스(하이픈으로 문자열 묶음)로 호출해야한다. -->  
 	<!-- 깔끔하게 그냥 케밥으로 통일하면 좋을것 같다 케밥이 맛있기도하고... -->
 	
-	<!-- bind를 통해 부모의 데이터를 propsㄹ를 동적으로 바인딩 가능 --> 
-	
-	<!-- object형식으로 bind 할경우 objectd의 객체들 모두 하위 컴포넌트로 전부 전달이 된다 -->	
-	
 	<div id="app-32">
 		<simple-counter-component></simple-counter-component>
 		<simple-counter-component></simple-counter-component>
@@ -439,12 +435,81 @@
 		<br><br>
 		<input v-model="parentMsg">
 		<br>
+		
+		<!-- bind를 통해 부모의 데이터를 propsㄹ를 동적으로 바인딩 가능 --> 
+		
 		<nakonako v-bind:my-message="parentMsg"></nakonako>
+		
+		<!-- object형식으로 bind 할경우 objectd의 객체들 모두 하위 컴포넌트로 전부 전달이 된다 -->
+		
 		<br>
 		<span>{{todo}}</span>
 		<br>
-		<todo-item v-bind="todo"></todo-item>
+		<todo-item-test v-bind="todo"></todo-item-test>
+		
+		<br>
+		<br>
+		
+		<!-- Vue prop validation 같은경우 Vue 실행환경에서만 console 경고가 나타난다 -->
+		
+		<input 
+			v-model="prop11"
+			placeholder="prop 11111"
+		>
+		<propcheck v-bind:propb="prop11"></propcheck>
+		
+		<br><br>
+		
+		<input 
+			v-model="prop22"
+			placeholder="prop 2222"
+		>
+		
+		<propcheck v-bind:propf="prop22"></propcheck>
+		
 	</div>
+	
+	<!-- component로 전달된 객체와 컴포넌트 안에서 실행되는 함수와 개별적으로 움직인다. -->
+	
+	<div id="app-33">
+		<p>{{total}}</p>
+		<button-counter33 v-on:increment="incrementTotal"></button-counter33>
+		<button-counter33 v-on:increment="incrementTotal"></button-counter33>
+		<br><br>
+		
+		<!-- this.$emit("increment")로 하면 변경 되었을 때 상위 프로퍼티가 변경되는 이벤트가 발생하지만 -->
+		<!-- v-on:click.native 식으로 상위 프로퍼티를 바로 실행도 가능하다 -->  
+		
+		<comp-dothething v-on:click.native="doTheThing"></comp-dothething>
+		<comp-dothething v-on:increment="doTheThing"></comp-dothething>
+		
+		
+		<!-- 양방향 바인드일경우 foo.sync를 통해 양방향 바인딩 가능 -->
+		<!-- this.$emit('update:foo', newValye) 형태로 앙방향 바인딩 가능 -->
+		<br><br>
+		<p>{{totalbind}}</p>
+		<comp-dothething :foo.sync="totalbind"></comp-dothething>
+		
+	</div>
+	
+	
+	<!-- 사용자 정의 이벤트를 통해 사용자 정의 입력을 만드는데에 사용 가능 -->
+	<div id="app-34">
+		<currency-input v-model="price"></currency-input>	
+	</div>
+	
+	
+	<!-- 하위 컴포넌트의 slot이 있을경우 값이 없을 경우에 slot의 값이 실행됨 --> 
+	<div id="app-35">
+		<h1>나는 부모 컴포넌트의 제목입니다.</h1>
+		<child-slot-test>
+			<!-- <p>이것은 원본 컨텐츠 11</p>
+			<p>이것은 원본 추가 컨텐츠 22</p> -->
+		</child-slot-test>
+	</div>
+	
+	
+	
 	
 	<!-- 리터럴 구문을 사용하여 숫자를 전달하면 해당값은 문자열로 전달된다 --> 
 	<!-- 바인드를 통해 숫자로 전달가능하다 -->
