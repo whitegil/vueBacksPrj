@@ -642,13 +642,89 @@ Vue.component("child-slot-test", {
 
 var app35 = new Vue({
 	el: "#app-35",
-	data : {
+	data : {  
 		
 	},
 	methods: {
 		
 	}
 })
+
+Vue.component("base-checkbox", {
+	model: {
+		prop: "checked",
+		event: "change"
+	},
+	props: {
+		checked: Boolean
+	},
+	template: `
+		<input
+			type="checkbox"
+			v-bind:checked="checked"
+			v-on:change="$emit('change', $event.target.checked)"
+		>
+	`
+})
+
+var app36 = new Vue({
+	el: "#app-36",
+	data : {
+		lovingVue: true
+	}, 
+	methods: {
+		
+	}
+})
+
+Vue.component("event-listener-input", {
+	inheriAttrs: false,
+	props: ["label", "value"],
+	computed: {
+		inputListeners: function(){
+			var vm = this
+			// "object.assign"는 오브젝트를 새로운 오브젝트로 병합합니다
+			return Object.assign({},
+			//우선 부모 엘리먼트의 모든 리스너를 추가합니다.
+				this.$listeners,
+				//그 다음, 기존 리스너를 override하는
+				//커스텀 리스너를 추가 할 수 있습니다.
+				{
+					//아래 구문을 사용하면 v-model과 같이 동작하도록 만들 수 있습니다
+					input: function(event) {
+						console.log("냠냠 이벤트리스너 받아오기!!");
+						vm.$emit("input", event.target.value)
+					}
+				}
+			)
+		}
+	},
+	template: `
+		<label>
+			{{label}}
+			<input
+				v-bind="$attrs"
+				v-bind:value="value"
+				v-on="inputListeners"
+			>
+		</label>
+	`
+})
+
+var app37 = new Vue({
+	el: "#app-37"
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
